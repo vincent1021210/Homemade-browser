@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>自製瀏覽器</title>
+  <meta name="description" content="Windows 桌面瀏覽器外殼。分頁、網址列與書籤自行實作，網頁由 Qt WebEngine 繪製。">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #221e18;
+      --muted: #6f675c;
+      --paper: #f7f4ee;
+      --card: #fffdf8;
+      --line: #e4ddd0;
+      --accent: #1f6f66;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.7 "Microsoft JhengHei UI", "PingFang TC", "Noto Sans TC", sans-serif;
+    }
+    main {
+      width: min(760px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 64px 0 80px;
+    }
+    .mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--accent);
+      color: var(--paper);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 18px 0 8px;
+      font-size: 40px;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+    }
+    .lead { color: var(--muted); margin: 0 0 28px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 14px 0;
+    }
+    h2 { margin: 0 0 8px; font-size: 18px; }
+    ol, ul { margin: 8px 0 0; padding-left: 1.2em; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92em;
+      background: #f3efe6;
+      padding: 0 0.3em;
+      border-radius: 4px;
+    }
+    a { color: var(--accent); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 6px 0; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+    .button {
+      display: inline-block;
+      background: var(--accent);
+      color: #f7f4ee;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+    }
+    .button.quiet {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-hidden="true">覽</div>
+    <h1>自製瀏覽器</h1>
+    <p class="lead">Windows 上的桌面瀏覽器外殼。分頁、網址列、書籤與瀏覽紀錄是這個專案寫的；網頁的排版、JavaScript 與影片交給 Qt WebEngine。</p>
+
+    <div class="actions">
+      <a class="button" href="https://github.com/vincent1021210/Homemade-browser">原始碼</a>
+      <a class="button quiet" href="https://github.com/vincent1021210/Homemade-browser/archive/refs/heads/main.zip">下載 main</a>
+    </div>
+
+    <section>
+      <h2>在這台 Windows 上執行</h2>
+      <ol>
+        <li>安裝 Python 3.12，並確認命令列可以執行 <code>python</code>。</li>
+        <li>雙擊 <code>安裝.bat</code>。第一次會下載 Qt WebEngine，需要幾分鐘。</li>
+        <li>雙擊 <code>啟動瀏覽器.bat</code>。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>這個程式負責什麼</h2>
+      <ul>
+        <li>分頁、上一頁、下一頁、重新載入與首頁</li>
+        <li>網址列：網址直接開啟，其餘文字用 Google 搜尋</li>
+        <li>書籤、最近瀏覽，以及重新開啟上次的分頁</li>
+        <li>下載檔案、網站權限詢問、頁面內尋找與縮放</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>快捷鍵</h2>
+      <table>
+        <tr><th>按鍵</th><th>作用</th></tr>
+        <tr><td>Ctrl+T</td><td>新分頁</td></tr>
+        <tr><td>Ctrl+W</td><td>關閉分頁</td></tr>
+        <tr><td>Ctrl+L</td><td>選取網址列</td></tr>
+        <tr><td>Ctrl+D</td><td>加入或移除書籤</td></tr>
+        <tr><td>Ctrl+F</td><td>在頁面中尋找</td></tr>
+        <tr><td>Alt+← / Alt+→</td><td>上一頁 / 下一頁</td></tr>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
