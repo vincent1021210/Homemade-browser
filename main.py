@@ -19,13 +19,15 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-# WebEngine 在非英文路徑下有時會起不來，工作目錄改到純英文的資料夾。
+# 旁邊有啟動批次檔時是原始碼；安裝版沒有這個檔，資料改放到使用者目錄。
+SOURCE_TREE = (ROOT / "啟動瀏覽器.bat").is_file()
 RUNTIME = Path(os.environ.get("LOCALAPPDATA", str(ROOT))) / "LocalBrowser"
 RUNTIME.mkdir(parents=True, exist_ok=True)
 os.chdir(RUNTIME)
 os.environ.setdefault("QTWEBENGINE_CHROMIUM_FLAGS", "--lang=zh-TW")
 
-LOG = ROOT / "error.log"
+LOG = (ROOT / "error.log") if SOURCE_TREE else (RUNTIME / "error.log")
+LIBRARY = (ROOT / "data" / "library.json") if SOURCE_TREE else (RUNTIME / "library.json")
 
 
 def _report(title: str, text: str) -> None:
@@ -56,7 +58,7 @@ try:
     from style import stylesheet
     from window import BrowserWindow
 except Exception:
-    _report("瀏覽器無法啟動", "無法載入 Qt WebEngine。請先執行「安裝.bat」。\n\n" + traceback.format_exc())
+    _report("瀏覽器無法啟動", "無法載入 Qt WebEngine。請重新安裝瀏覽器。\n\n" + traceback.format_exc())
     raise SystemExit(1)
 
 
@@ -95,7 +97,7 @@ def main() -> int:
     app.setWindowIcon(icon)
     profile = make_profile(app)
     attach_downloads(profile)
-    store = Store(ROOT / "data" / "library.json")
+    store = Store(LIBRARY)
     window = BrowserWindow(profile, store, restore=True)
     window.setWindowIcon(icon)
     window.show()
