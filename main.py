@@ -48,8 +48,8 @@ except Exception:
     pass
 
 try:
-    from PySide6.QtCore import Qt, QLocale
-    from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPixmap
+    from PySide6.QtCore import QLocale
+    from PySide6.QtGui import QFont, QIcon
     from PySide6.QtWidgets import QApplication
     from PySide6.QtWebEngineWidgets import QWebEngineView  # noqa: F401
 
@@ -63,20 +63,7 @@ except Exception:
 
 
 def make_icon() -> QIcon:
-    pixmap = QPixmap(64, 64)
-    pixmap.fill(Qt.GlobalColor.transparent)
-    painter = QPainter(pixmap)
-    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-    painter.setPen(Qt.PenStyle.NoPen)
-    painter.setBrush(QColor("#1f6f66"))
-    painter.drawRoundedRect(2, 2, 60, 60, 14, 14)
-    painter.setPen(QColor("#f7f4ee"))
-    font = QFont("Microsoft JhengHei UI", 28)
-    font.setWeight(QFont.Weight.Bold)
-    painter.setFont(font)
-    painter.drawText(pixmap.rect(), Qt.AlignmentFlag.AlignCenter, "覽")
-    painter.end()
-    return QIcon(pixmap)
+    return QIcon(str(ROOT / "app-icon.png"))
 
 
 def main() -> int:

@@ -23,7 +23,7 @@ if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
 New-Item -ItemType Directory -Path $stage | Out-Null
 $names = @(
     "main.py", "engine.py", "home.py", "location.py",
-    "store.py", "style.py", "tab.py", "window.py"
+    "store.py", "style.py", "tab.py", "window.py", "app-icon.png"
 )
 foreach ($name in $names) {
     Copy-Item (Join-Path $root $name) (Join-Path $stage $name)
